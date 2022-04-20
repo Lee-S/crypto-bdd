@@ -1,0 +1,5 @@
+requests
+pytest
+pytest-bdd
+pytest-html
+python-dotenv
