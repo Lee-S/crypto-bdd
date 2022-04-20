@@ -1,20 +1,18 @@
 import datetime
 import os
-
 import requests
 
 from pytest_bdd import scenarios, given, when, then, parsers
 
 from dotenv import load_dotenv
-
 load_dotenv()
 
 scenarios('../features/public_api.feature')
 
-API_URL = os.getenv("API_URL")  # Environment variables are set in the .env file.
+API_URL = os.getenv("API_URL") + "/0/public/"  # Environment variables are set in the .env file.
 
 
-# TODO add tupe hints to show knowedge of stronly types language
+# TODO add type hints to show knowledge of strongly types language
 
 @given("I am any user")
 def any_user():
