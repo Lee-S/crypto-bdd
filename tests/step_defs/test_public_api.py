@@ -11,8 +11,10 @@ load_dotenv()
 
 scenarios('../features/public_api.feature')
 
-API_URL = os.getenv("API_URL")      # Environment variables are set in the .env file.
+API_URL = os.getenv("API_URL")  # Environment variables are set in the .env file.
 
+
+# TODO add tupe hints to show knowedge of stronly types language
 
 @given("I am any user")
 def any_user():
@@ -28,6 +30,15 @@ def api_response(api: str):
     Using the API URL defined in .env file, call the passed in API method and return a response object
     """
     response = requests.get(API_URL + api)
+    return response
+
+
+@when(parsers.parse('the "{api}" api is called with params "{params}"'), target_fixture='api_response')
+def api_with_params_response(api: str, params: str):
+    """
+    Using the API URL defined in .env file, call the passed in API method and return a response object
+    """
+    response = requests.get(f"{API_URL}{api}?{params}")
     return response
 
 
@@ -66,3 +77,29 @@ def timstamp_within_tolerance(timestamp, tolerance_secs):
     """
     t_delta = datetime.datetime.now() - timestamp
     assert t_delta < datetime.timedelta(seconds=tolerance_secs)
+
+
+# TODO parameterize for response type
+@then(parsers.parse('all expected AssetPair tags are present'))
+def all_tags_present(api_response):
+    """
+    Check all expected tags are present on the response.  Libraries exist in Python to do this such
+    as Pydantic, however I will manually verify a subset of response tags showing a range of tests
+    """
+    results = api_response.json()["result"]
+    # Single result
+    assert len(results) == 1  # Assuming only 1 pair was provided as parameters.
+    # Correct asset
+    assert "XXBTZUSD" in results.keys()
+    asset = results["XXBTZUSD"]
+    # Direct comparison
+    assert asset["altname"] == "XBTUSD"
+    assert asset["wsname"] == "XBT/USD"
+    assert asset["aclass_base"] == "currency"
+    assert asset["base"] == "XXBT"
+    assert asset["aclass_quote"] == "currency"
+    assert asset["quote"] == "ZUSD"
+    assert asset["lot"] == "unit"
+    # Test on iterable
+    assert all(type(leverage) == int for leverage in asset["leverage_buy"])
+    assert all(leverage > 0 for leverage in asset["leverage_sell"])
