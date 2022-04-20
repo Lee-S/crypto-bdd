@@ -5,7 +5,8 @@ An exercise in BDD
 `git clone https://github.com/Lee-S/crypto-bdd.git`
 
 2. Create a .env file in the root of the project.  This contains secrets that are not committed to github
-```API_URL="https://api.EXCHANGE.com/0/public/"
+```
+API_URL="https://api.EXCHANGE.com/0/public/"
 USERNAME="user1"
 ```
 
