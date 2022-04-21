@@ -1,8 +1,11 @@
 # crypto-bdd
 ### An exercise in testing APIs using BDD.
 
-A crypto client was developed to be used by the BDD features.  Some pyest unittests exist for a few parts of this.
-pytest-tdd library was used to write BDD feature files for public and private API tests, along with thier step implementation.
+
+A crypto client was developed to be used by the BDD features.  Some pyest unittests exist for a few parts of this crypto client.
+
+The pytest-tdd library was used to write BDD feature files for both public and private API tests, along with thier step implementation.
+
 
 
 1. Checkout repo
@@ -24,7 +27,8 @@ KEY_2FA="ABCABC"
 docker run --rm -it --name bdd_instance -p 80:7000 localhost/bdd_image
 ```
 
-5. Navigate to the url http://127.0.0.1/  where you will see an html, and junit xml report of test results.
+You will see the tests run.
+
 ```
 collected 5 items                                                                                                                                  
 
@@ -48,4 +52,7 @@ tests/unittest/test_client.py::test_private_request_open_orders_returns_no_error
 ================================================================ 5 passed in 1.30s =================================================================
 Serving HTTP on 0.0.0.0 port 7000 (http://0.0.0.0:7000/) ...
 ```
+
+5. Navigate to the url http://127.0.0.1/  where you will see an html, and junit xml report of test results.
+
 
