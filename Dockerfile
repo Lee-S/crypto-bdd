@@ -1,12 +1,12 @@
 FROM python:3.8
 WORKDIR /app
-COPY * .
+COPY . /app
+RUN mkdir -p /app/reports
+ENV PYTHONPATH /app
 RUN pip install -r requirements.txt
-RUN pytest -v  --gherkin-terminal-reporter
-#CMD pytest -v --html=pytest.html
-#EXPOSE 9000
-#CMD python -m http.server 9000
-
-
+EXPOSE 7000
+CMD pytest -v --gherkin-terminal-reporter --html=/app/reports/crypto_bdd.html \
+    --junitxml=/app/reports/crypto_bdd_junit.xml ; \
+    python -m http.server 7000 --directory /app/reports
 
 
