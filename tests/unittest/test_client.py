@@ -30,14 +30,15 @@ def test_get_api_sign_returns_expected_signature():
     assert client.get_api_sign(uri_path, data) == expected_api_sign
 
 
-def test_private_request_header_calls_requests_post_with_correct_headers():
+def test_private_request_open_orders_returns_no_errors_and_empty_orders():
     client = ApiClient(private_key=PVT_KEY,
                        api_url=API_URL,
                        key_2fa=KEY_2FA,
                        api_key=API_KEY)
 
-    req = client.private_request("/0/private/OpenOrders", {})
-    assert req
+    req = client.private_request("OpenOrders", {})
+    assert req.ok
     payload = req.json()
-    assert payload
+    assert payload["error"] == []
+    assert payload["result"]["open"] == {}
 
