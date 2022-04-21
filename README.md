@@ -1,5 +1,9 @@
 # crypto-bdd
-An exercise in BDD
+###An exercise in testing APIs using BDD.
+
+A crypto client was developed to be used by the BDD features.  Some pyest unittests exist for a few parts of this.
+pytest-tdd library was used to write BDD feature files for public and private API tests, along with thier step implementation.
+
 
 1. Checkout repo
 `git clone https://github.com/Lee-S/crypto-bdd.git`

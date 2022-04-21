@@ -2,7 +2,7 @@ Feature: Public API tests
   Any user can retrieve information from the public API.
 
   Scenario: Retrieve exchange server time
-    Given I am any user
+    Given I am a public user
 
     When the "Time" api is called
 
@@ -13,9 +13,8 @@ Feature: Public API tests
     And timestamp is within "2" seconds of current time
 
 
-
   Scenario: Retrieve asset pair from exchange
-    Given I am any user
+    Given I am a public user
 
     When the "AssetPairs" api is called with params "pair=XXBTZUSD"
 

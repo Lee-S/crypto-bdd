@@ -1,5 +1,5 @@
 Feature: Private API tests
-  An registered user can connnect with signature and otp
+  An registered user can connect with signature and otp
 
 
   Scenario: Retrieve user OpenOrders
@@ -9,8 +9,6 @@ Feature: Private API tests
 
     Then the response status is "200"
     And the response json does not have errors
+    And All mandatory attributes present on orders
 
-  #TODO more validation
-#    And a valid timestamp is returned
-#    # Fictitious business requirement
-#    And timestamp is within "2" seconds of current time
+

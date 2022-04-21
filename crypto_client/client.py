@@ -10,12 +10,12 @@ import requests
 
 
 class ApiClient:
-
     """Manage calls to the API"""
 
     PRIVATE_URI_PATH = "/0/private/"
+    PUBLIC_URI_PATH = "/0/public/"
 
-    def __init__(self, private_key:str, api_url:str, key_2fa:str, api_key:str):
+    def __init__(self, api_url: str, private_key: str = None, key_2fa: str = None, api_key: str = None):
         self.private_key = private_key
         self.api_url = api_url
         self.key_2fa = key_2fa
@@ -33,7 +33,7 @@ class ApiClient:
         sigdigest = base64.b64encode(mac.digest())
         return sigdigest.decode()
 
-    def private_request(self, api_method:str, data: Dict):
+    def private_request(self, api_method: str, data: Dict):
         """Wrapper around private post call."""
         api_method = self.PRIVATE_URI_PATH + api_method
         headers = {}
@@ -45,6 +45,18 @@ class ApiClient:
         req = requests.post((self.api_url + api_method), headers=headers, data=data)
         return req
 
+    def public_request(self, api_method: str, params: str = ''):
+        """Wrapper around private post call."""
+        api_method = self.PUBLIC_URI_PATH + api_method
+        headers = {
+            'Content-Type': "application/x-www-form-urlencoded",
+        }
+        uri = self.api_url + api_method
+        if params:
+            uri += '?' + params
+        req = requests.get(uri, headers=headers)
+        return req
+
     @staticmethod
     def get_otp(key_2fa):
         """Generate One Time Password using 2FA key."""
@@ -54,4 +66,4 @@ class ApiClient:
     @staticmethod
     def get_nonce():
         """Pseudo random increasing int"""
-        return str(int(1000*time.time()))
+        return str(int(1000 * time.time()))

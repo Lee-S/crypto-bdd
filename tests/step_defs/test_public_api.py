@@ -4,18 +4,19 @@ import requests
 
 from pytest_bdd import scenarios, given, when, then, parsers
 
+from crypto_client.client import ApiClient
+
 from dotenv import load_dotenv
 load_dotenv()
 
 scenarios('../features/public_api.feature')
 
-API_URL = os.getenv("API_URL") + "/0/public/"  # Environment variables are set in the .env file.
+API_URL = os.getenv("API_URL") # Environment variables are set in the .env file.
 
 
-# TODO add type hints to show knowledge of strongly types language
 
-@given("I am any user")
-def any_user():
+@given("I am a public user")
+def public_user():
     """
     Dummy method for public API
     """
@@ -27,7 +28,8 @@ def api_response(api: str):
     """
     Using the API URL defined in .env file, call the passed in API method and return a response object
     """
-    response = requests.get(API_URL + api)
+    client = ApiClient(api_url=API_URL)
+    response = client.public_request(api)
     return response
 
 
@@ -36,8 +38,10 @@ def api_with_params_response(api: str, params: str):
     """
     Using the API URL defined in .env file, call the passed in API method and return a response object
     """
-    response = requests.get(f"{API_URL}{api}?{params}")
+    client = ApiClient(api_url=API_URL)
+    response = client.public_request(api, params)
     return response
+
 
 
 @then("the response json does not have errors")
@@ -51,7 +55,7 @@ def response_json_has_no_errors(api_response):
 @then(parsers.parse('the response status is "{code:d}"'))
 def response_code(api_response, code):
     """
-    Assert the http status is as expeced.
+    Assert the http status is as expected.
     """
     assert api_response.status_code == code
 
@@ -82,7 +86,7 @@ def timstamp_within_tolerance(timestamp, tolerance_secs):
 def all_tags_present(api_response):
     """
     Check all expected tags are present on the response.  Libraries exist in Python to do this such
-    as Pydantic, however I will manually verify a subset of response tags showing a range of tests
+    as Pydantic, however I will manually verify a subset of response tags
     """
     results = api_response.json()["result"]
     # Single result

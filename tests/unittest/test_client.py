@@ -19,6 +19,7 @@ def test_get_api_sign_returns_expected_signature():
         "type": "buy",
         "volume": 1.25
     }
+    # This is a publicly available example key
     private_key = "kQH5HW/8p1uGOVjbgWA7FunAmGO8lsSUXNsu3eow76sz84Q18fWxnyRzBHCd3pd5nE9qa99HAZtuZuj6F1huXg=="
     uri_path = "/0/private/AddOrder"
     expected_api_sign = "4/dpxb3iT4tp/ZCVEwSnEsLxx0bqyhLpdfOpc6fn7OR8+UClSV5n9E6aSS8MPtnRfp32bAb0nmbRn6H8ndwLUQ=="

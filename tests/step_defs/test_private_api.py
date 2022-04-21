@@ -47,3 +47,50 @@ def response_code(api_response: requests.Response, code: int):
     Assert the http status is as expected.  (For the API in question also need to check the payload for error and result)
     """
     assert api_response.status_code == code
+
+@then("All mandatory attributes present on orders")
+def all_attributes_on_orders(api_response: requests.Response):
+    """
+    Define a set of expected attributes and check each order has these attributes.
+    """
+    data = api_response.json()
+    for order in data["result"]["open"].values():
+        all_attributes_present(order)
+
+
+def all_attributes_present(order):
+  MANDATORY_ATTRIBUTES = {
+    "refid",
+    "userref",
+    "status",
+    "opentm",
+    "starttm",
+    "expiretm",
+    "descr",
+    "vol",
+    "vol_exec",
+    "cost",
+    "fee",
+    "price",
+    "stopprice",
+    "limitprice",
+    "misc",
+    "oflags",
+  }
+  assert all(attribute in set(order.keys()) for attribute in MANDATORY_ATTRIBUTES)
+
+  EXPECTED_ATTRIBUTES_DESCR = {
+    "pair",
+    "type",
+    "ordertype",
+    "price",
+    "price2",
+    "leverage",
+    "order",
+    "close",
+  }
+  assert all(attribute in set(order["descr"].keys()) for attribute in EXPECTED_ATTRIBUTES_DESCR)
+
+
+
+
