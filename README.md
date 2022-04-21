@@ -2,15 +2,16 @@
 ### An exercise in testing APIs using BDD.
 
 
-A crypto client was developed to be used by the BDD features.  Some pyest unittests exist for a few parts of this crypto client.
 
-The pytest-tdd library was used to write BDD feature files for both public and private API tests, along with thier step implementation.
+The pytest-tdd library was used to write BDD feature files for both public and private API tests, found in tests/features.  The implementation steps can be found in tests/steps_defs.  A reusable crypto client was developed and is called by the BDD Featrure tests.  A few unit tests for the client are in  unittests.
 
+I have attempetd to demo a few different examples of test techniques, yet the test suite is not exchaustive.
 
+## To run the tests from the Docker image
 
 1. Checkout repo
 ```
-git clone https://github.com/Lee-S/crypto-bdd.git
+git clone https://github.com/Lee-S/crypto-bdd.git && crypto_bdd
 ```
 
 2. Create a .env file in the root of the project.  This contains secrets that are not committed to github
@@ -28,7 +29,7 @@ docker build -t bdd_image .
 
 4. Run the container.  Where 80 is an unused port on your machine
 ```
-docker run --rm -it --name bdd_instance -p 80:7000 localhost/bdd_image
+docker run --rm -it --name bdd_instance -p 80:7000 bdd_image
 ```
 
 You will see the tests run.
