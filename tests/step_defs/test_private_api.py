@@ -11,36 +11,19 @@ import requests
 from pytest_bdd import scenarios, given, when, then, parsers
 
 from dotenv import load_dotenv
+
+from crypto_client.client import ApiClient
+
 load_dotenv()
 
 scenarios('../features/private_api.feature')
 
-API_URL = os.getenv("API_URL") + "/0/private/" # Environment variables are set in the .env file.
+API_URL = os.getenv("API_URL")  # Environment variables are set in the .env file.
 API_KEY = os.getenv("API_KEY")
-API_SEC = os.getenv("API_SEC")
+PVT_KEY = os.getenv("PVT_KEY")
 KEY_2FA = os.getenv("KEY_2FA")
 
-def get_signature(urlpath, data, secret):
-    postdata = urllib.parse.urlencode(data)
-    encoded = (str(data['nonce']) + postdata).encode()
-    message = urlpath.encode() + hashlib.sha256(encoded).digest()
-    mac = hmac.new(base64.b64decode(secret), message, hashlib.sha512)
-    sigdigest = base64.b64encode(mac.digest())
-    return sigdigest.decode()
-
-
-def private_request(uri_path, data):
-    headers = {}
-    headers['API-Key'] = API_KEY
-    headers['API-Sign'] = get_signature(uri_path, data, API_SEC)
-    req = requests.post((API_URL + uri_path), headers=headers, data=data)
-    json_data = req.json()
-    return req
-
-
-def get_otp():
-    totp = pyotp.TOTP(KEY_2FA)
-    return totp.now()
+#"/0/private/"
 
 
 #TODO
@@ -57,12 +40,9 @@ def api_response(api: str):
     """
     Using the API URL defined in .env file, call the passed in API method and return a response object
     """
-    response = private_request(API_URL + api,
-        {
-            "nonce": str(int(1000*time.time())),
-            "otp": get_otp()
-         })
-    return response
+    client = ApiClient(private_key=PVT_KEY, api_url=API_URL, key_2fa=KEY_2FA, api_key=API_KEY)
+    req = client.private_request("/0/private/Balance", {})
+    return req
 
 
 @then("the response json does not have errors")

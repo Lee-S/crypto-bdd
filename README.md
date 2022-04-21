@@ -6,8 +6,10 @@ An exercise in BDD
 
 2. Create a .env file in the root of the project.  This contains secrets that are not committed to github
 ```
-API_URL="https://api.EXCHANGE.com/0/public/"
-USERNAME="user1"
+API_URL="https://api.EXCHANGE.com/"
+API_KEY="XYZ"
+PVT_KEY="ABC"
+KEY_2FA="123"
 ```
 
 3. Build the Docker image
