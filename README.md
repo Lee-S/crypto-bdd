@@ -58,6 +58,6 @@ tests/unittest/test_client.py::test_private_request_open_orders_returns_no_error
 Serving HTTP on 0.0.0.0 port 7000 (http://0.0.0.0:7000/) ...
 ```
 
-5. Navigate to the url http://127.0.0.1/  where you will see an html, and junit xml report of test results.
+5. Navigate to the url http://127.0.0.1/  (if running localy, or use remote server) where you will see an html, and junit xml report of test results.
 
 
