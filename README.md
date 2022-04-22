@@ -16,10 +16,10 @@ git clone https://github.com/Lee-S/crypto-bdd.git && crypto_bdd
 
 2. Create a .env file in the root of the project.  This contains secrets that are not committed to github
 ```
-API_URL="https://api.EXCHANGE.com/"
-API_KEY="XYZ123ABC"
-PVT_KEY="XYZ123ABC"
-KEY_2FA="ABCABC"
+API_URL="https://api.EXCHANGE.com"
+API_KEY="<YOUR ACCOUNT API KEY>"
+PVT_KEY="<YOUR PRIVATE KEY>"
+KEY_2FA="<YOUR 2FA SETUP KEY>"
 ```
 
 3. Build the Docker image
